@@ -1,11 +1,16 @@
-<!--
-<div ng-repeat="connectedDevice in connectedDevices">
-Device Name: {{connectedDevice["dal.device.UID"]}}
+<div class="container">
+<div class="modal-body">
+   <div class="first-column">
+		<div class="list-group"  ng-repeat="connectedDevice in connectedDevices">    
+			<div class="list-group-item">
+			Device Name: {{connectedDevice["dal.device.UID"]}}
+			</div>
+		</div>
+   </div>
+   <div class="second-column">
+		 <div class="jumbotron">Select one device to monitor its energy consumption</div>
+   </div>
 </div>
--->
-
-<div>
-{{text}}
 </div>
 
 

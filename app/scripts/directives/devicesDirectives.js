@@ -4,6 +4,6 @@ app.directive('listConnectedDevices', function(){
 	return {
 		restrict: 'E',
 		templateUrl: 'views/listConnectedDevices.html',
-		controller: 'DevicesCtrl'
+		controller: 'ConnectedDevicesCtrl'
 	};
 });

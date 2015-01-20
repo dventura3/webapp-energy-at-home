@@ -77,3 +77,15 @@ body {
     border-bottom: 0;
   }
 }
+
+
+.first-column {
+  width: 30%;
+  float: left;
+}
+
+.second-column {
+  width: 40%;
+  float: right;
+}
+

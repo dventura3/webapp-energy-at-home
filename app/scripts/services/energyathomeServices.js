@@ -9,7 +9,6 @@ angular.module('webappEnergyAtHomeApp')
 			var baseURL = "http://localhost:8080/api/devices";
 			$http.get(baseURL).success(function(resp){
 				data = resp;
-				console.log(resp);
 				deffered.resolve();
 			});
 			return deffered.promise;
