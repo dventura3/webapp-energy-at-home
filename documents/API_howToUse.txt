@@ -1,0 +1,248 @@
+Start the application running start.sh (on linux) or start.bat (on Windows)
+
+point your browser to the address
+
+http://localhost:8080/virtualhome/index.html
+
+This simple GUI will provide you some simple ways to interact with the APIs. The code in "virtualhome/index.html" contains some examples of how to write an API javascript client.
+
+
+****
+HOW TO RECEIVE THE LIST OF ALL CONNECTED DEVICES?
+
+>> http://localhost:8080/api/devices
+
+>> RESPONSE:
+[
+    {
+        "dal.device.status": 2,
+        "dal.device.UID": "ZigBee:ColorLight 1:ah.app.36276195726903800-1",
+        "service.bundleid": 3,
+        "dal.device.driver": "ZigBee",
+        "component.name": "Light1",
+        "service.id": 71,
+        "service.scope": "bundle",
+        "component.id": 5
+    }
+]
+
+or:
+[
+    {
+        "dal.device.status": 2,
+        "dal.device.UID": "ZigBee:SmartPlug 1:ah.app.3521399293210526020-8",
+        "service.bundleid": 79,
+        "dal.device.driver": "ZigBee",
+        "service.id": 164,
+        "service.scope": "singleton"
+    }
+]
+
+
+****
+HOW TO KNOW THE LIST OF ALL FUNCTIONS EXPOSED BY A DEVICE
+
+>> http://host:port/api/devices/${dal_device_UID}/functions
+
+Example:
+
+>> curl http://localhost:8080/api/devices/ZigBee:ColorLight%201:ah.app.36276195726903800-1/functions
+
+[
+    {
+        "service.bundleid": 3,
+        "component.name": "Light1_ColorControl",
+        "dal.function.device.UID": "ZigBee:ColorLight 1:ah.app.36276195726903800-1",
+        "service.id": 88,
+        "dal.function.type": "light",
+        "dal.function.UID": "ZigBee:ColorLight 1:ah.app.36276195726903800-1:ColorControl",
+        "service.scope": "bundle",
+        "objectClass": [
+            "org.osgi.service.dal.Function",
+            "org.energy_home.dal.functions.ColorControl"
+        ],
+        "component.id": 6,
+        "dal.function.property.names": [
+            "HS"
+        ]
+    },
+    {
+        "service.bundleid": 3,
+        "component.name": "Light1_LevelControl",
+        "dal.function.device.UID": "ZigBee:ColorLight 1:ah.app.36276195726903800-1",
+        "service.id": 89,
+        "dal.function.type": "light",
+        "dal.function.UID": "ZigBee:ColorLight 1:ah.app.36276195726903800-1:LevelControl",
+        "service.scope": "bundle",
+        "objectClass": [
+            "org.osgi.service.dal.Function",
+            "org.osgi.service.dal.functions.MultiLevelControl"
+        ],
+        "component.id": 7,
+        "dal.function.property.names": [
+            "data"
+        ]
+    },
+    {
+        "service.bundleid": 3,
+        "component.name": "Light1_OnOff",
+        "dal.function.device.UID": "ZigBee:ColorLight 1:ah.app.36276195726903800-1",
+        "service.id": 90,
+        "dal.function.type": "light",
+        "dal.function.UID": "ZigBee:ColorLight 1:ah.app.36276195726903800-1:OnOff",
+        "service.scope": "bundle",
+        "objectClass": [
+            "org.osgi.service.dal.Function",
+            "org.osgi.service.dal.functions.BooleanControl",
+            "org.osgi.service.dal.functions.BooleanSensor"
+        ],
+        "dal.function.operation.names": [
+            "reverse",
+            "setFalse",
+            "setTrue"
+        ],
+        "component.id": 8,
+        "dal.function.property.names": [
+            "data"
+        ]
+    }
+]
+
+or:
+[
+    {
+        "service.bundleid": 79,
+        "dal.function.device.UID": "ZigBee:SmartPlug 1:ah.app.3521399293210526020-8",
+        "dal.meter.flow": "in",
+        "service.id": 162,
+        "dal.function.UID": "ZigBee:SmartPlug 1:ah.app.3521399293210526020-8:EnergyMeter",
+        "service.scope": "singleton",
+        "objectClass": [
+            "org.osgi.service.dal.Function",
+            "org.osgi.service.dal.functions.Meter"
+        ],
+        "dal.function.operation.names": [],
+        "dal.function.property.names": [
+            "current",
+            "total"
+        ]
+    },
+    {
+        "service.bundleid": 79,
+        "dal.function.device.UID": "ZigBee:SmartPlug 1:ah.app.3521399293210526020-8",
+        "service.id": 163,
+        "dal.function.UID": "ZigBee:SmartPlug 1:ah.app.3521399293210526020-8:OnOff",
+        "service.scope": "singleton",
+        "objectClass": [
+            "org.osgi.service.dal.Function",
+            "org.osgi.service.dal.functions.BooleanControl"
+        ],
+        "dal.function.operation.names": [
+            "reverse",
+            "setTrue",
+            "setFalse"
+        ],
+        "dal.function.property.names": [
+            "data"
+        ]
+    }
+]
+
+
+
+****
+HOW TO INVOKE A FUNCTION?
+
+1) POST request
+
+>> http://host:port/api/functions/${dal_function_UID}
+
+E bisogna passare un JSON con la specifica operazione da invocare:
+
+{"operation":"dal.function.operation.names"}
+
+Example:
+
+>> curl -H "Content-Type: application/json" -d '{"operation":"setTrue"}' http://localhost:8080/api/functions/ZigBee:ColorLight%201:ah.app.36276195726903800-1:OnOff
+
+>> RESPONSE: {"code":200}
+
+
+2) POST request - setting of value
+
+>> http://host:port/api/functions/${function_uid}
+
+Example:
+
+>> http://localhost/functions/ZigBee:test123:testButton
+
+{"operation":"setData",
+"arguments": 
+	[
+		{"type":"java.math.BigDecimal","value":1}
+	]
+}
+
+****
+SUBSCRIBING TO EVENTS USING WEB SOCKET
+
+
+The Websocket address to be specified is:
+
+>> ws://host:port/ws
+
+Once the WebSocket connection have been set-up, the system expects a json object describing subscriptions to events.
+
+This example shows a message to be sent to the server if you want to subscribe to events related to function "ZigBee:SmartPlug1:OnOff" and property "data"
+
+>> {"dal.function.UID":"ZigBee:SmartPlug1:OnOff","dal.function.property.name":"data"}
+
+Wildcards (*) are accepted! So you can subscribe to all events coming from every function sending the screen below
+
+>> {"dal.function.UID":"*","dal.function.property.name":"*"}
+
+or you can subscribe to all events coming froma specific device
+
+>> {"dal.function.UID":"ZigBee:SmartPlug1:*","dal.function.property.name":"*"}
+
+Every time you specify a subscription string over the same connection, older subscriptions on the same connection are cancelled.
+
+If you specify an invalid subscription string, the connection will be closed and an error will be reported
+
+Events matching the specified filters will be written by the server on this WebSocket connection, like in the example below:
+
+>> 
+{
+    "topic": "org/osgi/service/dal/FunctionEvent/PROPERTY_CHANGED",
+    "properties": {
+        "dal.function.UID": "ZigBee:SmartPlug1:OnOff",
+        "dal.function.property.value": {
+            "value": false,
+            "timestamp": 1410703590988
+        },
+        "dal.function.property.name": "data"
+    }
+}
+
+## Using WebSocket to get Overload notifications
+
+If you are running JEMMA with APIs, you can get Overload status notifications through websocket. The URI is
+
+>>  ws://host:port/wsoverload
+
+on this channel, the client will receive events according to the Overload status in the topic:
+
+>> ah/eh/overload/NO_OVERLOAD
+
+or
+
+>> ah/eh/overload/CONTRACTUAL_WARNING
+
+or
+
+>> ah/eh/overload/FIRST_WARNING
+
+or
+
+>> ah/eh/overload/SECOND_WARNING
+
