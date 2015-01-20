@@ -10,10 +10,11 @@
 var app = angular.module('webappEnergyAtHomeApp');
 
 
-app.controller('MainCtrl', ['$scope', 'energyathomeServices', function($scope, energyathomeServices) {
-    $scope.text = "pippo";
-	
+app.controller('DevicesCtrl', ['$scope', 'energyathomeServices', function($scope, energyathomeServices) {
+    $scope.text = "LIST-CONNNECTED-DEVICES-CONTROLLER";
+
 	energyathomeServices.async().then(function() {
 		$scope.connectedDevices = energyathomeServices.data();
 	});
+
 }]);
