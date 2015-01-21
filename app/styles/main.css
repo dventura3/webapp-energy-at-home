@@ -34,7 +34,7 @@ body {
 /* Customize container */
 @media (min-width: 768px) {
   .container {
-    max-width: 730px;
+    /*max-width: 730px;*/
   }
 }
 .container-narrow > hr {
@@ -80,12 +80,15 @@ body {
 
 
 .first-column {
-  width: 30%;
-  float: left;
+	margin-top: 20px;
+	margin-right: 20px;
+  	width: 30%;
+  	float: left;
 }
 
 .second-column {
-  width: 40%;
-  float: right;
+  	width: 55%;
+  	float: left;
+	margin-top: 20px;
 }
 

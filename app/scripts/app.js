@@ -14,8 +14,17 @@ angular
   ])
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html'
+      .when('/connection', {
+        templateUrl: 'views/connection.html'
+      })
+	  .when('/', {
+        templateUrl: 'views/connection.html'
+      })
+	  .when('/monitoring', {
+        templateUrl: 'views/monitoring.html'
+      })
+	  .when('/about', {
+        templateUrl: 'views/about.html'
       })
       .otherwise({
         redirectTo: '/'
