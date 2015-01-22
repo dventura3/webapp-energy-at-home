@@ -21,7 +21,8 @@ angular
         templateUrl: 'views/connection.html'
       })
 	  .when('/monitoring', {
-        templateUrl: 'views/monitoring.html'
+        templateUrl: 'views/monitoring.html',
+		controller: 'ConnectedDevicesCtrl'
       })
 	  .when('/about', {
         templateUrl: 'views/about.html'

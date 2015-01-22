@@ -9,23 +9,28 @@ angular.module('webappEnergyAtHomeApp')
 		else
 				var baseURL = "http://" + host;
 
-		var deffered = $q.defer();
   		var data = [];  
   		var myServices = {};
 
 		myServices.getConnectedDevices = function() {
+			var deffered = $q.defer();
 			var URL = baseURL + "/api/devices";
 			$http.get(URL).success(function(resp){
 				data = resp;
-				console.log(data);
 				deffered.resolve();
 			});
 			return deffered.promise;
 		};
 
 
-		myServices.getDeviceFunctions = function(){
-			var URL = baseURL + "/api/devices/{name-device}/functions";
+		myServices.getDeviceFunctions = function(deviceUID){
+			var deffered = $q.defer();
+			var URL = baseURL + "/api/devices/" + deviceUID + "/functions";
+			$http.get(URL).success(function(resp){
+				data = resp;
+				deffered.resolve();
+			});
+			return deffered.promise;
 		};
 
 		myServices.data = function() { return data; };

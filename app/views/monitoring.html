@@ -2,16 +2,7 @@
 	 On the left, when the user click on one of them, will appear a graphic
 	 with real time energy events and some controlls (such as: on/off or 
 	 start/finish to store date). -->
-<!--
 
-<div>
-{{text}}
-</div>
-
-<div ng-repeat="connectedDevice in connectedDevices">
-Device Name: {{connectedDevice["dal.device.UID"]}}
-</div>
--->
 
 <div class="container">
 <div class="modal-body">
@@ -19,7 +10,9 @@ Device Name: {{connectedDevice["dal.device.UID"]}}
 		<list-connected-devices></list-connected-devices>
 	</div>
 	<div class="second-column">
-		 <div class="jumbotron">Select one device to monitor its energy consumption</div>
+		<div class="jumbotron">
+			<device-details></device-details>
+		</div>
    </div>
 </div>
 </div>

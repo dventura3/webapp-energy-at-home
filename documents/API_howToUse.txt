@@ -114,7 +114,7 @@ or:
         "service.bundleid": 79,
         "dal.function.device.UID": "ZigBee:SmartPlug 1:ah.app.3521399293210526020-8",
         "dal.meter.flow": "in",
-        "service.id": 162,
+        "service.id": 169,
         "dal.function.UID": "ZigBee:SmartPlug 1:ah.app.3521399293210526020-8:EnergyMeter",
         "service.scope": "singleton",
         "objectClass": [
@@ -130,7 +130,7 @@ or:
     {
         "service.bundleid": 79,
         "dal.function.device.UID": "ZigBee:SmartPlug 1:ah.app.3521399293210526020-8",
-        "service.id": 163,
+        "service.id": 170,
         "dal.function.UID": "ZigBee:SmartPlug 1:ah.app.3521399293210526020-8:OnOff",
         "service.scope": "singleton",
         "objectClass": [

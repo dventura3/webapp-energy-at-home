@@ -1,3 +1,4 @@
+<!--
 <div class="container">
 <div class="modal-body">
 	<div class="first-column">
@@ -8,3 +9,20 @@
    </div>
 </div>
 </div>
+-->
+
+<ul ng-controller="ListController">
+    <li ng-repeat="item in items" ng-controller="ItemController">
+        <div ng-click="open(item)">{{item.content}}</div>        
+    </li>
+    <hr>
+    <ng-switch on="anyItemOpen()">
+     <div ng-switch-when="true">
+         <div ng-controller="ItemController">
+             {{opened.name}}: overlay: tweet, share, pin
+         </div>  
+         <a ng-click="close()">close</a>         
+     </div>
+    </ng-switch>   
+</ul>
+
