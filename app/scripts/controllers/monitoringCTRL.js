@@ -43,32 +43,35 @@ app.controller('ConnectedDevicesCtrl', ['$scope', 'energyathomeServices', functi
 		//call service to get all functions of selected device
 		energyathomeServices.getDeviceFunctions(idDevice).then(function() {
 				var selectedDeviceFunctions = energyathomeServices.data();
-				$scope.OnOff_functionUID = {}; //ID of function related to OnOff operation
+				$scope.functionUID = {}; //ID of function related to OnOff operation
 				for(var x=0; x < selectedDeviceFunctions.length; x++){
 					if(selectedDeviceFunctions[x]["dal.function.UID"].indexOf("OnOff") !=-1)
-							$scope.OnOff_functionUID["OnOff"] = selectedDeviceFunctions[x]["dal.function.UID"];			
+							$scope.functionUID["OnOff"] = selectedDeviceFunctions[x]["dal.function.UID"];
+					if(selectedDeviceFunctions[x]["dal.function.UID"].indexOf("EnergyMeter") !=-1)
+							$scope.functionUID["EnergyMeter"] = selectedDeviceFunctions[x]["dal.function.UID"];		
 				}
 				
 				//invoke the service to know the current OnOff state of the selected device
-				energyathomeServices.getOnOffStatus($scope.OnOff_functionUID.OnOff).then(function() {
+				energyathomeServices.getOnOffStatus($scope.functionUID.OnOff).then(function() {
 						var selectedDeviceStatus = energyathomeServices.data();
 						$scope.devSelectedStatus.OnOff = selectedDeviceStatus.result.value;
 						$scope.checkValue = $scope.devSelectedStatus.OnOff;
 				});
 
-				//TODO: Open websocket to receive energy data
+				//Open websocket to receive energy data
+				energyathomeServices.subscribeForEnergyEvents($scope.functionUID.EnergyMeter,"current");
 		});
     };
 
 	$scope.reverseOnOffStatus = function(){
 		var functionToSet = "";
-		if($scope.checkValue == "true")
+		if($scope.checkValue == 1)
 			functionToSet = "setTrue";
 		else
 			functionToSet = "setFalse";
 		//call API
-		energyathomeServices.getOnOffStatus($scope.OnOff_functionUID.OnOff, functionToSet).then(function() {
-				console.log(JSON.stringify(energyathomeServices.data()));
+		energyathomeServices.reverseOnOffStatus($scope.functionUID.OnOff, functionToSet).then(function() {
+				console.log("Device status was set? " + JSON.stringify(energyathomeServices.data()));
 		});
 	}
 

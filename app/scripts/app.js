@@ -10,7 +10,7 @@
  */
 angular
   .module('webappEnergyAtHomeApp', [
-    'ngRoute', 'ngResource'
+    'ngRoute', 'ngResource', 'ngWebSocket' 
   ])
   .config(function ($routeProvider) {
     $routeProvider

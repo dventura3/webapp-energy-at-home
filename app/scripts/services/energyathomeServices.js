@@ -1,7 +1,7 @@
 var myApp =  angular.module('webappEnergyAtHomeApp');
 
 
-myApp.factory('energyathomeServices', ['$http', '$q', function($http, $q){
+myApp.factory('energyathomeServices', ['$http', '$q', '$websocket' , function($http, $q, $websocket){
 
 		var host = "localhost";
 		var ip = "8080";
@@ -64,6 +64,37 @@ myApp.factory('energyathomeServices', ['$http', '$q', function($http, $q){
 				deffered.resolve();
 			});
 			return deffered.promise;
+		};
+
+		myServices.subscribeForEnergyEvents = function(functionUID, nameOfProperty){
+			if(ip !== "")
+				var baseURL = host + ":" + ip;
+			else
+				var baseURL = host;
+			var ws = $websocket('ws://' + baseURL + '/ws');
+			var collection = [];
+
+			ws.onMessage(function(event) {
+				var res;
+				try {
+					res = JSON.parse(event.data);
+					console.log(res.properties["dal.function.property.value"].level + res.properties["dal.function.property.value"].unit);
+				} catch(e) {
+					res = "Error";
+				}
+			});
+
+			ws.onError(function(event) {
+				console.log('connection Error', event);
+			});
+			ws.onClose(function(event) {
+				console.log('connection closed', event);
+			});
+			
+			ws.onOpen(function() {
+				console.log('connection open');
+				ws.send({"dal.function.UID" : functionUID, "dal.function.property.name" : nameOfProperty});
+			});
 		};
 
 		myServices.data = function() { return data; };

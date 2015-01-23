@@ -289,3 +289,34 @@ or
 
 >> ah/eh/overload/SECOND_WARNING
 
+
+
+Example with Energy Events - Results:
+
+{
+    "topic": "org/osgi/service/dal/FunctionEvent/PROPERTY_CHANGED",
+    "properties": {
+        "dal.function.UID": "ZigBee:SmartPlug 1:ah.app.3521399293210526020-8:EnergyMeter",
+        "dal.function.property.value": {
+            "level": 0,
+            "unit": "W",
+            "timestamp": 1422020547734
+        },
+        "dal.function.property.name": "current"
+    }
+}
+
+AND:
+
+{
+    "topic": "org/osgi/service/dal/FunctionEvent/PROPERTY_CHANGED",
+    "properties": {
+        "dal.function.UID": "ZigBee:SmartPlug 1:ah.app.3521399293210526020-8:EnergyMeter",
+        "dal.function.property.value": {
+            "level": 6.7,
+            "unit": "W",
+            "timestamp": 1422020553727
+        },
+        "dal.function.property.name": "current"
+    }
+}
