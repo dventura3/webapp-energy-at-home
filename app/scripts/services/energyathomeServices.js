@@ -13,7 +13,11 @@ myApp.factory('energyathomeServices', ['$http', '$q', '$websocket' , function($h
 
 		var data = [];  
   		var myServices = {};
-		var energyEvents = [];
+		var energyEvents = {
+			level: 0,
+			unit: "W",
+			timestamp: 0
+		};
 
 		myServices.getConnectedDevices = function() {
 			var deffered = $q.defer();
@@ -80,11 +84,11 @@ myApp.factory('energyathomeServices', ['$http', '$q', '$websocket' , function($h
 					res = JSON.parse(event.data);
 					console.log(res.properties["dal.function.property.value"].level + res.properties["dal.function.property.value"].unit);
 
-					energyEvents.push({
+					energyEvents = {
 						level: res.properties["dal.function.property.value"].level,
 						unit: res.properties["dal.function.property.value"].unit,
 						timestamp: res.properties["dal.function.property.value"].timestamp
-					});
+					};
 				} catch(e) {
 					res = "Error";
 				}

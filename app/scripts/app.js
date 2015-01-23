@@ -10,7 +10,7 @@
  */
 angular
   .module('webappEnergyAtHomeApp', [
-    'ngRoute', 'ngResource', 'ngWebSocket' 
+    'ngRoute', 'ngResource', 'ngWebSocket', 'highcharts-ng'
   ])
   .config(function ($routeProvider) {
     $routeProvider

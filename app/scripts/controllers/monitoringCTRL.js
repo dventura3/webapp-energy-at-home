@@ -12,6 +12,11 @@ var app = angular.module('webappEnergyAtHomeApp');
 
 app.controller('ConnectedDevicesCtrl', ['$scope', 'energyathomeServices', function($scope, energyathomeServices) {
 
+	$scope.ENERGY = {
+		level : 0,
+		unit : 'W'
+	};
+
 	energyathomeServices.getConnectedDevices().then(function() {
 		//receive a json object containing a list of connected devices
 		$scope.connectedDevices = energyathomeServices.data();
@@ -60,7 +65,8 @@ app.controller('ConnectedDevicesCtrl', ['$scope', 'energyathomeServices', functi
 
 				//Open websocket to receive energy data
 				energyathomeServices.subscribeForEnergyEvents($scope.functionUID.EnergyMeter,"current");
-				$scope.ENERGY = energyathomeServices.energyEvents();
+				//var tmp = energyathomeServices.energyEvents();
+				
 		});
     };
 
@@ -75,6 +81,15 @@ app.controller('ConnectedDevicesCtrl', ['$scope', 'energyathomeServices', functi
 				console.log("Device status was set? " + JSON.stringify(energyathomeServices.data()));
 		});
 	}
+
+
+	$scope.$watch(function () { 
+		return energyathomeServices.energyEvents();
+	}, function (newVal, oldVal) {
+		console.log("New Data::: ", newVal);
+		$scope.ENERGY.level = newVal.level;
+		$scope.ENERGY.unit = newVal.unit;
+	}, true);
 
 }]);
 
