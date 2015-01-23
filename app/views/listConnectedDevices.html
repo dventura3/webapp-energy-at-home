@@ -1,7 +1,4 @@
 <div class="list-group" ng-repeat="connectedDevice in connectedDevices">    
 	<a href="" class="list-group-item" ng-class='{active:isActive(connectedDevice["dal.device.UID"])}' ng-click='selectDevForDetails(connectedDevice["dal.device.UID"])'>{{connectedDevice["dal.device.UID"]}}</a>
-
-	<!-- TMP: only to prove -->
-	<a href="" class="list-group-item" ng-class='{active:isActive("PROVE")}' ng-click='selectDevForDetails("PROVE")'>PROVE</a>
 </div>
 

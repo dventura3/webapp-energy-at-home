@@ -22,8 +22,10 @@ app.controller('ConnectedDevicesCtrl', ['$scope', 'energyathomeServices', functi
 		$scope.connectedDevices = energyathomeServices.data();
 
 		//to set as "active" the first device in the list
-		if($scope.connectedDevices.length >= 1)
+		if($scope.connectedDevices.length >= 1){
 			$scope.activeDevice = $scope.connectedDevices[0]["dal.device.UID"];
+			$scope.selectDevForDetails($scope.activeDevice);
+		}
 		/*
 		for(var x=0; x < $scope.connectedDevices.length; x++)
 			console.log($scope.connectedDevices[x]["dal.device.UID"]);
