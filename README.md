@@ -11,7 +11,6 @@ To interact with the Energy@Home eco-system, I'm using HTTP REST and WebSocket A
 
 This work is ongoing.
 
-Currently I have the error releated to CORS. A fast resolutionf od this problema I disable web security of Chromeium.
-
+Currently I have an error releated to CORS. A fast resolution about this problem is to disable web security on Chromeium using this command:
 `chromium-browser --disable-web-security`
 

@@ -1,7 +1,16 @@
 <!-- show or hide the panel to see the detail or to modify the information of device -->
 
-	{{devSelected}}
+	Device Name: {{devSelected}}
 	<br>
+	<div class="onRight">
+	<div class="onoffswitch">
+		<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" ng-checked="devSelectedStatus.OnOff" ng-click="reverseOnOffStatus()" ng-model="checkValue">
+		<label class="onoffswitch-label" for="myonoffswitch">
+		    <span class="onoffswitch-inner"></span>
+		    <span class="onoffswitch-switch"></span>
+		</label>
+	</div>
+	</div>
 
 	<!--
 

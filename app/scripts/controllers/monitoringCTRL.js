@@ -30,7 +30,9 @@ app.controller('ConnectedDevicesCtrl', ['$scope', 'energyathomeServices', functi
 	};
 
 	$scope.selectDevForDetails = function(idDevice){
-		$scope.selectedDeviceFunctions = [];
+
+		//status Of current on/off value
+		$scope.devSelectedStatus = {};
 
 		//to show "active" class in the list of selected device
 		$scope.activeDevice = idDevice;
@@ -49,11 +51,17 @@ app.controller('ConnectedDevicesCtrl', ['$scope', 'energyathomeServices', functi
 				
 				//invoke the service to know the current OnOff state of the selected device
 				energyathomeServices.getOnOffStatus(OnOff_functionUID).then(function() {
-						$scope.selectedDeviceStatus = energyathomeServices.data();
-						console.log(JSON.stringify($scope.selectedDeviceStatus));
+						var selectedDeviceStatus = energyathomeServices.data();
+						$scope.devSelectedStatus.OnOff = selectedDeviceStatus.result.value;
+						$scope.checkValue = $scope.devSelectedStatus.OnOff;
 				});
 		});
     };
+
+	$scope.reverseOnOffStatus = function(){
+		console.log($scope.checkValue);
+		//call reverse API
+	}
 
 
 }]);

@@ -176,7 +176,7 @@ ZigBee:SmartPlug%201:ah.app.3521399293210526020-8:OnOff
 
 Example:
 
->> http://localhost/functions/ZigBee:test123:testButton
+>> http://localhost/api/functions/ZigBee:test123:testButton
 
 {"operation":"setData",
 "arguments": 
@@ -187,13 +187,44 @@ Example:
 
 
 ****
-GETTING DATA FROM DEVICE
+GETTING DATA FROM DEVICE (USE A POST REQUEST)
 
 >> curl -H "Content-Type: application/json" -d '{"operation":"getData"}' http://localhost:8080/api/functions/ZigBee:SmartPlug%201:ah.app.3521399293210526020-8:OnOff
 
 OR explicitally writing that it is a POST request:
 
 >> curl -X POST -H "Content-Type: application/json" -d '{"operation":"getData"}' http://localhost:8080/api/functions/ZigBee:SmartPlug%201:ah.app.3521399293210526020-8:OnOff
+
+Result:
+
+{
+    "data": {
+        "code": 200,
+        "result": {
+            "value": true,
+            "timestamp": 1422009546697
+        }
+    },
+    "status": 200,
+    "config": {
+        "method": "POST",
+        "transformRequest": [
+            null
+        ],
+        "transformResponse": [
+            null
+        ],
+        "url": "http://localhost:8080/api/functions/ZigBee:SmartPlug 1:ah.app.3521399293210526020-8:OnOff",
+        "data": {
+            "operation": "getData"
+        },
+        "headers": {
+            "Accept": "application/json, text/plain, */*",
+            "Content-Type": "application/json;charset=utf-8"
+        }
+    },
+    "statusText": "OK"
+}	
 
 
 ****
