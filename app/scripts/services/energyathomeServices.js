@@ -1,5 +1,5 @@
 angular.module('webappEnergyAtHomeApp')
-	.factory('energyathomeServices', ['$http', '$q' , function($http, $q){
+	.factory('energyathomeServices', ['$http', '$q', function($http, $q){
 
 		var host = "localhost";
 		var ip = "8080";
@@ -9,7 +9,7 @@ angular.module('webappEnergyAtHomeApp')
 		else
 				var baseURL = "http://" + host;
 
-  		var data = [];  
+		var data = [];  
   		var myServices = {};
 
 		myServices.getConnectedDevices = function() {
@@ -30,6 +30,30 @@ angular.module('webappEnergyAtHomeApp')
 				data = resp;
 				deffered.resolve();
 			});
+			return deffered.promise;
+		};
+
+
+		myServices.getOnOffStatus = function(functionUID){
+			var deffered = $q.defer();
+
+			var URL = baseURL + "/api/functions/" + functionUID;
+			$http({
+				url: URL,
+				method: "POST",
+				data: { 'operation' : 'getData' }
+			})
+			.then(function(resp){
+				data = resp;
+				deffered.resolve();
+			});
+	
+			/*
+			$http.post(URL, {"operation":"getData"}).success(function(resp){
+				data = resp;
+				deffered.resolve();
+			});
+			*/
 			return deffered.promise;
 		};
 

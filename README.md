@@ -10,3 +10,8 @@ To interact with the Energy@Home eco-system, I'm using HTTP REST and WebSocket A
 - [Documentation of DAL Functions exposed by JEMMA devices](https://github.com/ismb/jemma/wiki/JEMMA-DAL-APIs-functions)
 
 This work is ongoing.
+
+Currently I have the error releated to CORS. A fast resolutionf od this problema I disable web security of Chromeium.
+
+`chromium-browser --disable-web-security`
+

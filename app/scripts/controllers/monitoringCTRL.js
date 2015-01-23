@@ -30,16 +30,30 @@ app.controller('ConnectedDevicesCtrl', ['$scope', 'energyathomeServices', functi
 	};
 
 	$scope.selectDevForDetails = function(idDevice){
+		$scope.selectedDeviceFunctions = [];
+
 		//to show "active" class in the list of selected device
 		$scope.activeDevice = idDevice;
 
 		//update element to show in the right part of the web page
         $scope.devSelected = idDevice;
+		
+		//call service to get all functions of selected device
+		energyathomeServices.getDeviceFunctions(idDevice).then(function() {
+				var selectedDeviceFunctions = energyathomeServices.data();
+				var OnOff_functionUID = ""; //ID of function related to OnOff operation
+				for(var x=0; x < selectedDeviceFunctions.length; x++){
+					if(selectedDeviceFunctions[x]["dal.function.UID"].indexOf("OnOff") !=-1)
+							OnOff_functionUID = selectedDeviceFunctions[x]["dal.function.UID"];			
+				}
+				
+				//invoke the service to know the current OnOff state of the selected device
+				energyathomeServices.getOnOffStatus(OnOff_functionUID).then(function() {
+						$scope.selectedDeviceStatus = energyathomeServices.data();
+						console.log(JSON.stringify($scope.selectedDeviceStatus));
+				});
+		});
     };
-
-	//quando si clicca su un device, si invoca la .../api/devices/{devUID}/functions e
-	//automaticamente anche la funzione per aprire il webSocket e ricevere
-	//i dati sul consumo energetico da graficare.
 
 
 }]);

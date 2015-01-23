@@ -165,6 +165,8 @@ Example:
 
 >> curl -H "Content-Type: application/json" -d '{"operation":"setTrue"}' http://localhost:8080/api/functions/ZigBee:ColorLight%201:ah.app.36276195726903800-1:OnOff
 
+ZigBee:SmartPlug%201:ah.app.3521399293210526020-8:OnOff
+
 >> RESPONSE: {"code":200}
 
 
@@ -182,6 +184,17 @@ Example:
 		{"type":"java.math.BigDecimal","value":1}
 	]
 }
+
+
+****
+GETTING DATA FROM DEVICE
+
+>> curl -H "Content-Type: application/json" -d '{"operation":"getData"}' http://localhost:8080/api/functions/ZigBee:SmartPlug%201:ah.app.3521399293210526020-8:OnOff
+
+OR explicitally writing that it is a POST request:
+
+>> curl -X POST -H "Content-Type: application/json" -d '{"operation":"getData"}' http://localhost:8080/api/functions/ZigBee:SmartPlug%201:ah.app.3521399293210526020-8:OnOff
+
 
 ****
 SUBSCRIBING TO EVENTS USING WEB SOCKET
