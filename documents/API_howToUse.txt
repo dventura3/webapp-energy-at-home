@@ -165,7 +165,6 @@ Example:
 
 >> curl -H "Content-Type: application/json" -d '{"operation":"setTrue"}' http://localhost:8080/api/functions/ZigBee:ColorLight%201:ah.app.36276195726903800-1:OnOff
 
-ZigBee:SmartPlug%201:ah.app.3521399293210526020-8:OnOff
 
 >> RESPONSE: {"code":200}
 

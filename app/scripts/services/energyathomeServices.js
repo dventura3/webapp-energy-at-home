@@ -51,6 +51,21 @@ myApp.factory('energyathomeServices', ['$http', '$q', function($http, $q){
 			return deffered.promise;
 		};
 
+		myServices.reverseOnOffStatus = function(functionUID, functionToSet){
+			var deffered = $q.defer();
+			var URL = baseURL + "/api/functions/" + functionUID;
+			$http({
+				url: URL,
+				method: "POST",
+				data: { 'operation' : functionToSet }
+			})
+			.then(function(resp){
+				data = resp.data;
+				deffered.resolve();
+			});
+			return deffered.promise;
+		};
+
 		myServices.data = function() { return data; };
 		
 		return myServices;

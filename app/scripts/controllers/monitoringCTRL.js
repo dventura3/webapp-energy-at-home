@@ -43,24 +43,33 @@ app.controller('ConnectedDevicesCtrl', ['$scope', 'energyathomeServices', functi
 		//call service to get all functions of selected device
 		energyathomeServices.getDeviceFunctions(idDevice).then(function() {
 				var selectedDeviceFunctions = energyathomeServices.data();
-				var OnOff_functionUID = ""; //ID of function related to OnOff operation
+				$scope.OnOff_functionUID = {}; //ID of function related to OnOff operation
 				for(var x=0; x < selectedDeviceFunctions.length; x++){
 					if(selectedDeviceFunctions[x]["dal.function.UID"].indexOf("OnOff") !=-1)
-							OnOff_functionUID = selectedDeviceFunctions[x]["dal.function.UID"];			
+							$scope.OnOff_functionUID["OnOff"] = selectedDeviceFunctions[x]["dal.function.UID"];			
 				}
 				
 				//invoke the service to know the current OnOff state of the selected device
-				energyathomeServices.getOnOffStatus(OnOff_functionUID).then(function() {
+				energyathomeServices.getOnOffStatus($scope.OnOff_functionUID.OnOff).then(function() {
 						var selectedDeviceStatus = energyathomeServices.data();
 						$scope.devSelectedStatus.OnOff = selectedDeviceStatus.result.value;
 						$scope.checkValue = $scope.devSelectedStatus.OnOff;
 				});
+
+				//TODO: Open websocket to receive energy data
 		});
     };
 
 	$scope.reverseOnOffStatus = function(){
-		console.log($scope.checkValue);
-		//call reverse API
+		var functionToSet = "";
+		if($scope.checkValue == "true")
+			functionToSet = "setTrue";
+		else
+			functionToSet = "setFalse";
+		//call API
+		energyathomeServices.getOnOffStatus($scope.OnOff_functionUID.OnOff, functionToSet).then(function() {
+				console.log(JSON.stringify(energyathomeServices.data()));
+		});
 	}
 
 
