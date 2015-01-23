@@ -60,6 +60,7 @@ app.controller('ConnectedDevicesCtrl', ['$scope', 'energyathomeServices', functi
 
 				//Open websocket to receive energy data
 				energyathomeServices.subscribeForEnergyEvents($scope.functionUID.EnergyMeter,"current");
+				$scope.ENERGY = energyathomeServices.energyEvents();
 		});
     };
 
@@ -74,7 +75,6 @@ app.controller('ConnectedDevicesCtrl', ['$scope', 'energyathomeServices', functi
 				console.log("Device status was set? " + JSON.stringify(energyathomeServices.data()));
 		});
 	}
-
 
 }]);
 

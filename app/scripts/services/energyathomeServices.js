@@ -13,6 +13,7 @@ myApp.factory('energyathomeServices', ['$http', '$q', '$websocket' , function($h
 
 		var data = [];  
   		var myServices = {};
+		var energyEvents = [];
 
 		myServices.getConnectedDevices = function() {
 			var deffered = $q.defer();
@@ -72,32 +73,39 @@ myApp.factory('energyathomeServices', ['$http', '$q', '$websocket' , function($h
 			else
 				var baseURL = host;
 			var ws = $websocket('ws://' + baseURL + '/ws');
-			var collection = [];
 
 			ws.onMessage(function(event) {
 				var res;
 				try {
 					res = JSON.parse(event.data);
 					console.log(res.properties["dal.function.property.value"].level + res.properties["dal.function.property.value"].unit);
+
+					energyEvents.push({
+						level: res.properties["dal.function.property.value"].level,
+						unit: res.properties["dal.function.property.value"].unit,
+						timestamp: res.properties["dal.function.property.value"].timestamp
+					});
 				} catch(e) {
 					res = "Error";
 				}
 			});
-
 			ws.onError(function(event) {
 				console.log('connection Error', event);
 			});
 			ws.onClose(function(event) {
 				console.log('connection closed', event);
 			});
-			
 			ws.onOpen(function() {
 				console.log('connection open');
 				ws.send({"dal.function.UID" : functionUID, "dal.function.property.name" : nameOfProperty});
 			});
+		
+			return energyEvents;
 		};
 
 		myServices.data = function() { return data; };
+		
+		myServices.energyEvents = function() { return energyEvents; };
 		
 		return myServices;
 }]);
