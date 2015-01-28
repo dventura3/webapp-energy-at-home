@@ -9,8 +9,12 @@ To interact with the Energy@Home eco-system, I'm using HTTP REST and WebSocket A
 - [DAL HTTP REST and WebSocket APIs documentation](https://github.com/ismb/it.ismb.pert.osgi.dal.web-apis/blob/master/README.md)
 - [Documentation of DAL Functions exposed by JEMMA devices](https://github.com/ismb/jemma/wiki/JEMMA-DAL-APIs-functions)
 
-This work is ongoing.
 
-Currently I have an error releated to CORS. A fast resolution about this problem is to disable web security on Chromeium using this command:
+NB: Currently I have an error releated to CORS. A fast resolution about this problem is to disable web security on Chromeium using this command:
 `chromium-browser --disable-web-security`
 
+
+Built with:
+- [Yeoman](http://yeoman.io/)
+- [AngularJS](https://angularjs.org/)
+- [Bootstrap](http://getbootstrap.com/2.3.2/)

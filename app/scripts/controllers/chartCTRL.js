@@ -17,7 +17,7 @@ app.controller('ChartCtrl', ['$scope', function($scope) {
 							//var y = Math.random();
 							$scope.chartConfig.series[0].data.push([x,y]);
 							//$scope.chartConfig.series[0].data.push($scope.ENERGY.level);
-							if($scope.chartConfig.series[0].data.length >= 20)
+							if($scope.chartConfig.series[0].data.length >= 30)
 								$scope.chartConfig.series[0].data.shift();
 							$scope.$apply();
 						}, 1000);
